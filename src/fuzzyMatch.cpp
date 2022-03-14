@@ -25,11 +25,11 @@ isFuzzyMatchPresent(std::string* seq, std::string* key, int searchSize, int thre
     searches for a fuzzy match of key in the first searchSize characters of seq
 */
 int
-findFirstFuzzyMatch(std::string *seq, std::string *key, int searchSize, int thresholdDist)
+findFirstFuzzyMatch(std::string *seq, std::string *key, int searchSize, int thresholdDist, int seqStartPos)
 {
     int i;
     int size = std::min((int)seq->size(), searchSize);
-    for (i=0; i<searchSize; ++i) {
+    for (i=seqStartPos; i<searchSize; ++i) {
         if (isFuzzyMatch(seq, i, key, 0, 0, thresholdDist)) {
             break;
         }

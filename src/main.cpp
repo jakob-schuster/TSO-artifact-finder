@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "FastqParser.h"
+#include "utilities.h"
 
 #define C_DEFAULT   "\x1B[0m"
 #define C_GREEN     "\x1B[32m"
@@ -29,7 +30,7 @@ main (int argc, char *argv[])
 {
     //  check the argument count
     if (argc < 3) {
-        std::cout << C_YELLOW << "Not enough arguments!" << C_DEFAULT << "Expected format:\n"
+        std::cout << C_YELLOW << "Not enough arguments!" << C_DEFAULT << " Expected format:\n"
                 << "\tTSO-artifact-finder [input filename] [output filename] (optional: how many reads to sample) (optional: TSO sequence)\n";
         return 1;
     }
@@ -43,7 +44,6 @@ main (int argc, char *argv[])
     sampleReads = 100000;
     if (argc >= 4) {
         sampleReads = std::stoi(argv[3]);
-        std::cout << "Set sample reads\n";
     }
 
     //  set up which TSO sequence should be used

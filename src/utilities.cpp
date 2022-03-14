@@ -1,5 +1,6 @@
 #include <string>
 #include <algorithm>
+#include <iostream>
 
 #include "utilities.h"
 #include "fuzzyMatch.h"
@@ -66,4 +67,39 @@ bool
 hasTSO(std::string* seq, int thresholdDist, std::string TSO, int searchSize)
 {
     return isFuzzyMatchPresent(seq, &TSO, searchSize, thresholdDist);
+}
+
+/*
+    checks whether a seq has a TSO r artifact in the last searchSize characters,
+    with some edit distance tolerance
+*/
+bool
+hasFullTSO(std::string* seq, int thresholdDist, std::string TSO, int searchSize)
+{
+    //  ! still debugging this function do not use !
+    std::cout << "seq is size " << seq->size() << "\n";
+    //  first determine the maximum size of the search
+    int size = std::min((int)seq->size(), searchSize);
+    std::cout << "size " << size << "\n";
+    
+    //  then find if the TSO is present
+    int TSOPosition = findFirstFuzzyMatch(seq, &TSO, searchSize, thresholdDist);
+    if (TSOPosition >= size) {
+        std::cout << "TSO: no\n";
+    } else {
+        std::cout << "TSO: " << TSOPosition << "\n";
+    }
+
+    std::string
+    TSOReverseComplement = reverseComplement(&TSO);
+    //  start the sequence from a new position
+    auto
+    TSORevCompPosition = findFirstFuzzyMatch(seq, &TSOReverseComplement, size, thresholdDist);
+    if (TSORevCompPosition >= size) {
+        std::cout << "Trc: no\n";
+    } else {
+        std::cout << "Trc: " << TSORevCompPosition << "\n";
+    }
+
+    return true;
 }
