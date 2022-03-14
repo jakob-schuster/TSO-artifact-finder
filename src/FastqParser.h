@@ -11,7 +11,7 @@ class FastqParser
         std::string TSO, TSORevComp;
     
     public:
-        FastqParser(Filename, Filename, int sampleReads, std::string TSO);
+        FastqParser(Filename inFilename, int sampleReads, std::string TSO);
 
         Stats
         parse();

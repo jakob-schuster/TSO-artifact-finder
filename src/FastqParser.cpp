@@ -4,10 +4,9 @@
 #include "FastqParser.h"
 #include "utilities.h"
 
-FastqParser::FastqParser(Filename inFilename, Filename outFilename, int sampleReads, std::string TSO)
+FastqParser::FastqParser(Filename inFilename, int sampleReads, std::string TSO)
 {
     this->inFilename = inFilename;
-    this->outFilename = outFilename;
     this->sampleReads = sampleReads;
     this->TSO = TSO;
     this->TSORevComp = reverseComplement(&TSO);
@@ -22,8 +21,6 @@ FastqParser::parse()
     //  open the files
     std::ifstream
     inFile (this->inFilename);
-    std::ofstream
-    outFile (this->outFilename);
 
     std::string line, sequence;
     int 
