@@ -10,6 +10,7 @@ FastqParser::FastqParser(Filename inFilename, Filename outFilename, int sampleRe
     this->outFilename = outFilename;
     this->sampleReads = sampleReads;
     this->TSO = TSO;
+    this->TSORevComp = reverseComplement(&TSO);
     this->thresholdDist = 2;
 }
 
@@ -44,10 +45,17 @@ FastqParser::parse()
 
             sequence = line;
 
+            bool foundTSO = false;
             if (hasTSO(&sequence, this->thresholdDist, this->TSO)) {
                 stats["readsWithTSO"]++;
-            } else {
-                stats["readsWithoutTSO"]++;
+                foundTSO = true;
+            }
+
+            if (hasTSO(&sequence, this->thresholdDist, TSORevComp)) {
+                stats["readsWithTSORevComp"]++;
+                if (foundTSO) {
+                    stats["readsWithBoth"]++;
+                }
             }
         }
         ++fileLineNum;
@@ -58,6 +66,7 @@ FastqParser::parse()
         }
     }
 
+    this->stats = stats;
     return stats;
 };
 
@@ -68,10 +77,4 @@ FastqParser::getStats()
     for (const auto & [key, val] : this->stats) {
         std::cout << key << ":\t" << val << "\n";
     }
-}
-
-float
-FastqParser::percentage()
-{
-    return (float)this->stats["records_with_TSO"] / (float)(this->stats["total_records"]) * 100;
 }

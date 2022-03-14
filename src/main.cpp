@@ -16,12 +16,13 @@ printStats (Stats stats)
     std::cout << "File statistics:\n";
 
     std::cout 
-            << "Total reads       : " << stats["totalReads"] << "\n"
-            << "Reads with TSO    : " << stats["readsWithTSO"] << "\n"
-            << "Reads without TSO : " << stats["readsWithoutTSO"] << "\n";
+            << "Total reads                       : " << stats["totalReads"] << "\n"
+            << "Reads with TSO                    : " << stats["readsWithTSO"] << "\n"
+            << "Reads with TSO reverse complement : " << stats["readsWithTSORevComp"] << "\n"
+            << "Reads with both (artifacts)       : " << stats["readsWithBoth"] << "\n";
     
     float
-    percentage = (float)stats["readsWithTSO"] / (float)stats["totalReads"] * 100;
+    percentage = (float)stats["readsWithBoth"] / (float)stats["totalReads"] * 100;
     std::cout << "\n" << C_YELLOW << percentage << "%" << C_DEFAULT << " of reads are TSO artifacts.\n";
 }
 

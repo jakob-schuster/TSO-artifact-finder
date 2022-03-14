@@ -8,7 +8,7 @@ class FastqParser
         Stats stats;
         Filename inFilename, outFilename;
         int sampleReads, thresholdDist;
-        std::string TSO;
+        std::string TSO, TSORevComp;
     
     public:
         FastqParser(Filename, Filename, int sampleReads, std::string TSO);
@@ -18,7 +18,4 @@ class FastqParser
 
         void
         getStats();
-
-        float
-        percentage();
 };
