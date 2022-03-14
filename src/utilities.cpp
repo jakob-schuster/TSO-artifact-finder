@@ -61,16 +61,6 @@ reverseComplement(std::string * s)
 }
 
 /*
-    checks whether a seq has a TSO artifact in the first searchSize characters, 
-    with some edit distance tolerance
-*/
-bool
-hasTSO(std::string* seq, int thresholdDist, std::string TSO, int searchSize)
-{
-    return isFuzzyMatchPresent(seq, &TSO, searchSize, thresholdDist);
-}
-
-/*
     checks whether a seq is a TSO artifact or not
 */
 bool
