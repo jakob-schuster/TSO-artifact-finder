@@ -42,17 +42,8 @@ FastqParser::parse()
 
             sequence = line;
 
-            bool foundTSO = false;
-            if (hasTSO(&sequence, this->thresholdDist, this->TSO)) {
-                stats["readsWithTSO"]++;
-                foundTSO = true;
-            }
-
-            if (hasTSO(&sequence, this->thresholdDist, TSORevComp)) {
-                stats["readsWithTSORevComp"]++;
-                if (foundTSO) {
-                    stats["readsWithBoth"]++;
-                }
+            if (isTSOArtifact(&sequence, this->thresholdDist, this->TSO)) {
+                stats["artifacts"]++;
             }
         }
         ++fileLineNum;

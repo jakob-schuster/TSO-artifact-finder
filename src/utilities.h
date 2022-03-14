@@ -17,3 +17,6 @@ hasTSO(std::string* seq, int thresholdDist=2, std::string TSO="AAGCAGTGGTATCAACG
 
 bool
 hasFullTSO(std::string* seq, int thresholdDist, std::string TSO, int searchSize=2000);
+
+bool
+isTSOArtifact(std::string* seq, int thresholdDist, std::string TSO, int searchSize=2000);

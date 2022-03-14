@@ -16,13 +16,11 @@ printStats (Stats stats)
     std::cout << "File statistics:\n";
 
     std::cout 
-            << "Total reads                       : " << stats["totalReads"] << "\n"
-            << "Reads with TSO                    : " << stats["readsWithTSO"] << "\n"
-            << "Reads with TSO reverse complement : " << stats["readsWithTSORevComp"] << "\n"
-            << "Reads with both (artifacts)       : " << stats["readsWithBoth"] << "\n";
+            << "Total reads         : " << stats["totalReads"] << "\n"
+            << "TSO artifacts found : " << stats["artifacts"] << "\n";
     
     float
-    percentage = (float)stats["readsWithBoth"] / (float)stats["totalReads"] * 100;
+    percentage = (float)stats["artifacts"] / (float)stats["totalReads"] * 100;
     std::cout << "\n" << C_YELLOW << percentage << "%" << C_DEFAULT << " of reads are TSO artifacts.\n";
 }
 
@@ -36,12 +34,10 @@ printStatsToFile (Stats stats, Filename outFilename)
     outFile (outFilename, std::ios_base::app);
 
     float
-    percentage = (float)stats["readsWithBoth"] / (float)stats["totalReads"] * 100;
+    percentage = (float)stats["artifacts"] / (float)stats["totalReads"] * 100;
 
     outFile << "total reads," << stats["totalReads"] << "\n"
-            << "reads with TSO," << stats["readsWithTSO"] << "\n"
-            << "reads with TSO reverse complement," << stats["readsWithTSORevComp"] << "\n"
-            << "reads with both (artifacts)," << stats["readsWithBoth"] << "\n"
+            << "reads that were artifacts," << stats["artifacts"] << "\n"
             << "percentage of reads that are TSO artifacts," << percentage << "\n";
     
     outFile.close();
