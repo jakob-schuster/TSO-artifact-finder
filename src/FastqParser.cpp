@@ -4,17 +4,20 @@
 #include "FastqParser.h"
 #include "utilities.h"
 
-FastqParser::FastqParser(Filename inFilename, Filename outFilename)
+FastqParser::FastqParser(Filename inFilename, Filename outFilename, int sampleReads, std::string TSO)
 {
     this->inFilename = inFilename;
     this->outFilename = outFilename;
-
-    this->parse();
+    this->sampleReads = sampleReads;
+    this->TSO = TSO;
+    this->thresholdDist = 2;
 }
 
-void
+Stats
 FastqParser::parse()
 {
+    Stats stats;
+
     //  open the files
     std::ifstream
     inFile (this->inFilename);
@@ -28,7 +31,7 @@ FastqParser::parse()
 
     while (getline(inFile, line)) {
         //  print out progress every few records
-        if (fileLineNum % 1000 == 0 && fileLineNum > 0) {
+        if (fileLineNum % 10000 == 0 && fileLineNum > 0) {
             std::cout << "\tUp to line " << fileLineNum << "...\n";
         }
 
@@ -37,19 +40,25 @@ FastqParser::parse()
 
         //  do whatever is appropriate for this line
         if (recLineNum == 1) {
-            this->stats["total_records"]++;
+            stats["totalReads"]++;
 
             sequence = line;
 
-            if (hasTSO(&sequence)) {
-                this->stats["records_with_TSO"]++;
+            if (hasTSO(&sequence, this->thresholdDist, this->TSO)) {
+                stats["readsWithTSO"]++;
             } else {
-                this->stats["records_without_TSO"]++;
+                stats["readsWithoutTSO"]++;
             }
         }
-
         ++fileLineNum;
+
+        //  don't read more than sampleReads
+        if (stats["totalReads"] >= this->sampleReads) {
+            break;
+        }
     }
+
+    return stats;
 };
 
 void
@@ -59,4 +68,10 @@ FastqParser::getStats()
     for (const auto & [key, val] : this->stats) {
         std::cout << key << ":\t" << val << "\n";
     }
+}
+
+float
+FastqParser::percentage()
+{
+    return (float)this->stats["records_with_TSO"] / (float)(this->stats["total_records"]) * 100;
 }

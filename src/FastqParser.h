@@ -7,13 +7,18 @@ class FastqParser
     private:
         Stats stats;
         Filename inFilename, outFilename;
+        int sampleReads, thresholdDist;
+        std::string TSO;
     
     public:
-        FastqParser(Filename, Filename);
+        FastqParser(Filename, Filename, int sampleReads, std::string TSO);
 
-        void
+        Stats
         parse();
 
         void
         getStats();
+
+        float
+        percentage();
 };

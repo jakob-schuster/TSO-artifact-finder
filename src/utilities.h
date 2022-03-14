@@ -13,4 +13,4 @@ std::string
 reverseComplement(std::string * s);
 
 bool
-hasTSO(std::string* seq, int thresholdDist=4, std::string TSO="AAGCAGTGGTATCAACGCAGAGTACATGGG", int searchSize=1000);
+hasTSO(std::string* seq, int thresholdDist=2, std::string TSO="AAGCAGTGGTATCAACGCAGAGTACATGGG", int searchSize=1000);
