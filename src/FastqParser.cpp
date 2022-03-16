@@ -10,7 +10,7 @@ FastqParser::FastqParser(Filename inFilename, int sampleReads, std::string TSO)
     this->sampleReads = sampleReads;
     this->TSO = TSO;
     this->TSORevComp = reverseComplement(&TSO);
-    this->thresholdDist = 2;
+    this->thresholdDist = 3;
 }
 
 Stats

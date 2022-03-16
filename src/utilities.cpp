@@ -66,6 +66,7 @@ reverseComplement(std::string * s)
 bool
 isTSOArtifact(std::string* seq, int thresholdDist, std::string TSO, int searchSize)
 {
+    // std::cout << "isTSOArtifact on " << *seq << "\n";
     auto
     size = std::min((int)seq->size(), searchSize);
 
