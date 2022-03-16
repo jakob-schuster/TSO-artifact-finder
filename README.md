@@ -1,7 +1,5 @@
 A program for finding out how many reads in a Fastq have TSO (template switching oligo) artifacts.
 
-Parses an input `.fq` or `.fastq` file, finding which reads contain faulty TSO information.
-
 # Usage instructions
 
 Simply run `./TSO-artifact-finder`, giving one input file to parse, and one output file to store output statistics.
